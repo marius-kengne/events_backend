@@ -1,0 +1,27 @@
+# Ignorer les .env Symfony dans /api
+api/.env
+api/.env.*
+api/.env.local.php
+
+# Ignorer les dépendances locales
+api/vendor/
+api/var/
+vendor/
+
+# Caches, logs, etc.
+api/*.log
+api/var/*
+!api/var/.gitkeep
+
+# IDEs et fichiers système
+**/.idea
+**/.vscode
+**/*.iml
+**/.DS_Store
+**/Thumbs.db
+
+# Node (si un jour tu ajoutes un frontend)
+node_modules/
+build/
+dist/
+composer.lock

@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: symfony_app
+    volumes:
+      - ./api:/var/www
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    command: sh -c "composer install && php -S 0.0.0.0:8000 -t public"
+
+  db:
+    image: mysql:8
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: eventsBD
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: harold
+      MYSQL_PASSWORD: harold
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
