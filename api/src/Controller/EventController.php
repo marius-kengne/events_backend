@@ -131,4 +131,36 @@ class EventController extends AbstractController
         return $this->json(['message' => 'Event published successfully.']);
     }
 
+
+    #[Route('/api/events/{id}', name: 'show_event', methods: ['GET'])]
+    public function showEvent(Event $event, Security $security): JsonResponse
+    {
+        $user = $security->getUser();
+
+        // Si l’événement est publié → tout le monde peut voir
+        if ($event->isPublished()) {
+            return $this->json($this->formatEvent($event));
+        }
+
+        // Si l’événement n’est pas publié → seul son auteur organisateur peut voir
+        if ($user && $event->getUser() === $user && in_array('ROLE_ORGANIZER', $user->getRoles())) {
+            return $this->json($this->formatEvent($event));
+        }
+
+        return $this->json(['error' => 'Event not found or not published'], 404);
+    }
+
+    private function formatEvent(Event $event): array
+    {
+        return [
+            'id' => $event->getId(),
+            'title' => $event->getTitle(),
+            'description' => $event->getDescription(),
+            'date' => $event->getDate()?->format('Y-m-d H:i:s'),
+            'location' => $event->getLocation(),
+            'published' => $event->isPublished(),
+            'organizer_email' => $event->getUser()?->getEmail(),
+        ];
+    }
+
 }
