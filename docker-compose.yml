@@ -10,7 +10,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    command: sh -c "composer install && php -S 0.0.0.0:8000 -t public"
+    command: sh -c "./entrypoint.sh"
 
   db:
     image: mysql:8
