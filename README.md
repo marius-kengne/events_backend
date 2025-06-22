@@ -1,4 +1,4 @@
-# 📦 Symfony Event API
+# 📦 events_backend
 
 Une API REST développée avec Symfony pour gérer des événements, avec authentification JWT.
 
